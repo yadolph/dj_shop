@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import json
 
 
 class User(AbstractUser):
@@ -12,6 +13,7 @@ class Product(models.Model):
     price = models.FloatField(null=True)
     description = models.CharField(max_length=2000, null=True)
     catalogue = models.ForeignKey('Catalogue', on_delete=models.CASCADE, related_name='products')
+    picture = models.CharField(max_length=100, default='nopic.jpg')
 
 
     def __str__(self):
@@ -34,4 +36,10 @@ class Catalogue(models.Model):
 class Order(models.Model):
     cart = models.CharField(max_length=1000)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def create_cart(self, cart):
+        self.cart = json.dumps(cart)
+
+    def load_cart(self):
+        return json.load(self.cart)
 
