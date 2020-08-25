@@ -13,8 +13,15 @@ class Product(models.Model):
     description = models.CharField(max_length=2000, null=True)
     catalogue = models.ForeignKey('Catalogue', on_delete=models.CASCADE, related_name='products')
 
+
     def __str__(self):
         return f'{self.brand} {self.model}'
+
+
+class Article(models.Model):
+    name = models.CharField(max_length= 75, null=False)
+    text = models.CharField(max_length=3000, null=False)
+    products = models.ManyToManyField(Product, related_name='articles')
 
 
 class Catalogue(models.Model):
