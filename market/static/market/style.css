@@ -1,0 +1,21 @@
+h1.product_name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 3em;
+    background: -webkit-linear-gradient(right, #654ea3, #eaafc8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    margin: 1px;
+}
+
+div.product_cat {
+    width: 49%;
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+}
+
+div.product_description {
+    width: 100%;
+    text-align: left;
+}

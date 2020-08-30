@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import json
+from ckeditor.fields import RichTextField
 
 
 class User(AbstractUser):
@@ -13,7 +14,7 @@ class Product(models.Model):
     price = models.FloatField(null=True)
     description = models.CharField(max_length=2000, null=True)
     catalogue = models.ForeignKey('Catalogue', on_delete=models.CASCADE, related_name='products')
-    picture = models.CharField(max_length=100, default='nopic.jpg')
+    picture = models.ImageField(upload_to='pics/%Y/%m/%d', default='pics/nopic.jpg')
 
 
     def __str__(self):

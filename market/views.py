@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from market.models import Product
 
 
 def main(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    template = 'home.html'
+    products = Product.objects.filter()
+    context = {'products': products}
+    return render(request, template, context=context)
 
 # Create your views here.
