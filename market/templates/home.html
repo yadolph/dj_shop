@@ -1,14 +1,5 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'market/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
-</head>
-<body>
     {% block content %}
         {% for article in articles %}
             <div>
@@ -17,6 +8,6 @@
                 <div style="display: inline-block;">{{ article.brief|safe }}</div>
             </div>
         {% endfor %}
+
+        <h1><a href="{% url 'catalogue_main' %}">Перейти в каталог товаров</a></h1>
     {% endblock %}
-</body>
-</html>

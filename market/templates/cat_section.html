@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+        <h1>{{ catalogue.name }}</h1>
+        {% for product in products %}
+            <a href="{% url 'product_full' product.id %}"><h1>{{ product.brand }} {{ product.model }}</h1></a>
+        {% endfor %}
+    {% endblock %}

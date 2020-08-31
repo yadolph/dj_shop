@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from market.models import Product, Article
+from market.models import Product, Article, Catalogue
 
 
 def home(request):
@@ -25,10 +25,18 @@ def product_full(request, pk):
     context = {'product': product}
     return render(request, template, context=context)
 
-def catalogue(request):
+
+def catalogue_main(request):
     template = 'cat.html'
-    products = Product.objects.filter()
-    context = {'products': products}
+    catalogues = Catalogue.objects.filter()
+    context = {'catalogues': catalogues}
+    return render(request, template, context=context)
+
+def catalogue_section(request, pk):
+    template = 'cat_section.html'
+    catalogue = get_object_or_404(Catalogue, id=pk)
+    products = catalogue.products.all()
+    context = {'catalogue': catalogue, 'products': products}
     return render(request, template, context=context)
 
 # Create your views here.

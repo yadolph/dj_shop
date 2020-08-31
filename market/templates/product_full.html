@@ -1,14 +1,5 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'market/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
-</head>
-<body>
     {% block content %}
             <div>
                 <h1 class="product_name">{{ product.brand }} {{ product.model }}</h1>
@@ -16,5 +7,3 @@
                 <div style="display: inline-block;">{{ product.description|safe }}</div>
             </div>
     {% endblock %}
-</body>
-</html>

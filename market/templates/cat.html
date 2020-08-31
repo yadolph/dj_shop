@@ -1,22 +1,7 @@
-{% load static %}
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'market/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
-</head>
-<body>
     {% block content %}
-        {% for product in products %}
-            <div class="product_cat">
-                <h1 class="product_name">{{ product.brand }} {{ product.model }}</h1>
-                <div><img src="{{ product.picture.url }}" height="250px" /></div>
-                <div class="product_description">{{ product.description|safe }}</div>
-            </div>
+        {% for catalogue in catalogues %}
+            <h1><a href="{% url 'catalogue_section' catalogue.id %}">{{ catalogue.name }}</a></h1>
         {% endfor %}
     {% endblock %}
-</body>
-</html>

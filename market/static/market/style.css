@@ -1,5 +1,9 @@
+body {
+    font-family: 'Noto Sans', sans-serif;
+}
+
 h1.product_name {
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Russo One', sans-serif;
     font-size: 3em;
     background: -webkit-linear-gradient(right, #654ea3, #eaafc8);
     -webkit-background-clip: text;
@@ -18,4 +22,8 @@ div.product_cat {
 div.product_description {
     width: 100%;
     text-align: left;
+}
+
+div.footer {
+    margin-top: 100px;
 }
