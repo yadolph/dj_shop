@@ -6,14 +6,22 @@ from ckeditor.widgets import CKEditorWidget
 
 class ProductAdminForm(forms.ModelForm):
     description = forms.CharField(widget=CKEditorWidget())
+    brief = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = Product
+        fields = '__all__'
+
+class ArtcileAdminForm(forms.ModelForm):
+    text = forms.CharField(widget=CKEditorWidget())
+    brief = forms.CharField(widget=CKEditorWidget())
+    class Meta:
+        model = Article
         fields = '__all__'
 
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    pass
+    form = ArtcileAdminForm
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):

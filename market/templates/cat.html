@@ -10,11 +10,11 @@
 </head>
 <body>
     {% block content %}
-        {% for article in articles %}
-            <div>
-                <h1><a href="{% url 'article_full' article.id %}">{{ article.name }}</a></h1>
-                <div><img src="{{ article.picture.url }}" height="150px" style="display: inline-block;"/></div>
-                <div style="display: inline-block;">{{ article.brief|safe }}</div>
+        {% for product in products %}
+            <div class="product_cat">
+                <h1 class="product_name">{{ product.brand }} {{ product.model }}</h1>
+                <div><img src="{{ product.picture.url }}" height="250px" /></div>
+                <div class="product_description">{{ product.description|safe }}</div>
             </div>
         {% endfor %}
     {% endblock %}

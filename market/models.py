@@ -12,7 +12,8 @@ class Product(models.Model):
     brand = models.CharField(max_length=50, null=False)
     model = models.CharField(max_length=75, null=False)
     price = models.FloatField(null=True)
-    description = models.CharField(max_length=2000, null=True)
+    brief = models.CharField(max_length=500, null=True)
+    description = models.CharField(max_length=3000, null=True)
     catalogue = models.ForeignKey('Catalogue', on_delete=models.CASCADE, related_name='products')
     picture = models.ImageField(upload_to='pics/%Y/%m/%d', default='pics/nopic.jpg')
 
@@ -23,8 +24,13 @@ class Product(models.Model):
 
 class Article(models.Model):
     name = models.CharField(max_length= 75, null=False)
-    text = models.CharField(max_length=3000, null=False)
+    brief = models.CharField(max_length=500, null=False, default='Краткое описание статьи')
+    picture = models.ImageField(upload_to='pics/%Y/%m/%d', default='pics/nopic.jpg')
+    text = models.CharField(max_length=15000, null=False)
     products = models.ManyToManyField(Product, related_name='articles')
+
+    def __str__(self):
+        return self.name
 
 
 class Catalogue(models.Model):
