@@ -1,12 +1,17 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-from market.models import Product, Article, Catalogue
-
+from market.models import Product, Article, Catalogue, User
+from django.contrib.auth import authenticate, logout, login
+from market.forms import RegUser, LoginUser, AddToCart, ModifyCartForm
+from django.db import IntegrityError
+from pprint import pprint
 
 def home(request):
     template = 'home.html'
     articles = Article.objects.filter()
-    context = {'articles': articles}
+    username = request.user
+    if request.user.is_anonymous:
+        username = 'Гость'
+    context = {'articles': articles, 'username': username}
     return render(request, template, context=context)
 
 
@@ -20,9 +25,24 @@ def article_full(request, pk):
 
 
 def product_full(request, pk):
+    cart = request.session.get('cart', {})
+    pprint(cart)
+    prod_id = str(pk)
     template = 'product_full.html'
     product = get_object_or_404(Product, id=pk)
-    context = {'product': product}
+    form = AddToCart()
+    result = ''
+
+    if request.method == 'POST':
+        if not prod_id in cart.keys():
+            quantity = int(request.POST.get('quantity'))
+            cart[prod_id] = quantity
+            request.session['cart'] = cart
+            pprint(cart)
+            result = 'success'
+        else:
+            result = 'failure'
+    context = {'product': product, 'form': form, 'result': result}
     return render(request, template, context=context)
 
 
@@ -32,6 +52,7 @@ def catalogue_main(request):
     context = {'catalogues': catalogues}
     return render(request, template, context=context)
 
+
 def catalogue_section(request, pk):
     template = 'cat_section.html'
     catalogue = get_object_or_404(Catalogue, id=pk)
@@ -39,4 +60,76 @@ def catalogue_section(request, pk):
     context = {'catalogue': catalogue, 'products': products}
     return render(request, template, context=context)
 
-# Create your views here.
+
+def signup(request):
+    result = ''
+    form = RegUser()
+
+    if request.method == 'POST':
+        username = request.POST.get('email')
+        email = username
+        password = request.POST.get('password')
+        password_check = request.POST.get('password_check')
+
+        if password != password_check:
+            return render(request, 'signup.html', {'result': 'Пароли не совпадают', 'form': form})
+
+        try:
+            new_user = User.objects.create_user(username, email=email, password=password)
+        except IntegrityError:
+            return render(request, 'signup.html', {'result': 'Такой пользователь уже существует', 'form': form})
+
+        result = f'Пользователь {new_user.username} создан'
+
+    return render(
+        request,
+        'signup.html',
+        {'form': form, 'result': result}
+    )
+
+
+def login_user(request):
+    result = ''
+    form = LoginUser()
+
+    if request.user.is_authenticated:
+        print(request.user)
+
+    if request.method == 'POST':
+        username = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            result = 'Вы успешно вошли в систему'
+        else:
+            result = 'Ошибка. Проверьте введенные данные'
+
+    return render(
+        request,
+        'login.html',
+        {'form': form, 'result': result}
+    )
+
+
+def logout_user(request):
+    logout(request)
+
+    return render(
+        request,
+        'logout.html',
+    )
+
+def cart(request):
+    template = 'cart.html'
+    cart_list = []
+    cart = request.session.get('cart', '')
+    form = ModifyCartForm()
+    if cart:
+        for key, val in cart.items():
+            products = (get_object_or_404(Product, id=int(key)), val)
+            cart_list.append(products)
+    print(cart_list)
+    context = {'cart_list': cart_list, 'form': form}
+    return render(request, template, context=context)
+

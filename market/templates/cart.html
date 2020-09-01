@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+        <h1>Корзина</h1>
+        {% for product, quantity in cart_list %}
+            <h2>{{ product }} - {{ quantity }} шт.</h2>
+        {% endfor %}
+
+
+        {% for product, quantity in cart_list %}
+            <form action="" method="post">
+            {% csrf_token %}
+                {{ form.product_id }}
+                {{ form.product }}
+                {{ form.quantity }}
+            <input type="submit" value="ОК">
+        </form>
+        {% endfor %}
+
+        {% for product, quantity in cart_list %}
+            <form action="" method="post">
+            {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <input type="text" name="product_name" value="{{ product.brand }} {{ product.model }}" disabled>
+                <input type="number" name="quantity" value="{{ quantity }}">
+                <input type="submit" value="ОК">
+        </form>
+        {% endfor %}
+
+
+
+    {% endblock %}

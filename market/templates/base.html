@@ -11,6 +11,12 @@
 <body>
     {% block content %}
     {% endblock %}
-<div class="footer">ФУТЕР ДА</div>
+    <div class="footer">
+        <a href="{% url 'login' %}">Логин</a> &lt;&lt;&gt;&gt;&nbsp;
+        <a href="{% url 'signup' %}">Зарегистрироваться</a> &lt;&lt;&gt;&gt;&nbsp;
+        <a href="{% url 'logout' %}">Выйти</a> &lt;&lt;&gt;&gt;&nbsp;
+        <a href="{% url 'home' %}">Домой</a> &lt;&lt;&gt;&gt;&nbsp;
+        <a href="{% url 'cart' %}">Корзина</a>
+    </div>
 </body>
 </html>
