@@ -30,3 +30,7 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(Catalogue)
 class ProductAdmin(admin.ModelAdmin):
     pass
+
+@admin.register(Order)
+class ProductAdmin(admin.ModelAdmin):
+    pass

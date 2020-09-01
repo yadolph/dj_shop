@@ -12,8 +12,14 @@
                 <input type="text" name="product_name" value="{{ product.brand }} {{ product.model }}" disabled>
                 <input type="number" name="quantity" value="{{ quantity }}">
                 <input type="submit" value="Обновить">
-        </form>
+            </form>
         {% endfor %}
+        <br/>
+        <form action="{% url 'order' %}" method="POST">
+            {% csrf_token %}
+                <input type="hidden" name="order_post" value="True">
+                <input type="submit" value="Создать заказ">
+            </form>
 
 
 

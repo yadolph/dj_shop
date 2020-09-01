@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from market.models import Product, Article, Catalogue, User
+from market.models import Product, Article, Catalogue, User, Order
 from django.contrib.auth import authenticate, logout, login
 from market.forms import RegUser, LoginUser, AddToCart, ModifyCartForm
 from django.db import IntegrityError
 from pprint import pprint
+import json
 
 def home(request):
     template = 'home.html'
@@ -128,7 +129,7 @@ def cart(request):
             del request.session['cart'][str(id)]
             request.session.modified = True
         else:
-            request.session['cart'][str(id)] = quantity
+            request.session['cart'][str(id)] = int(quantity)
             request.session.modified = True
 
     template = 'cart.html'
@@ -139,7 +140,28 @@ def cart(request):
         for key, val in cart.items():
             products = (get_object_or_404(Product, id=int(key)), val)
             cart_list.append(products)
-    print(cart_list)
     context = {'cart_list': cart_list, 'form': form}
     return render(request, template, context=context)
+
+def order(request):
+    template = 'orders.html'
+    if request.method == 'POST':
+        cart = request.session.get('cart')
+        cart = json.dumps(cart)
+        user = request.user
+        new_order = Order(cart=cart, user=user)
+        new_order.save()
+        request.session['cart'].clear()
+        request.session.modified = True
+        context = {'orders': ''}
+        return render(request, template, context)
+    else:
+        user = request.user
+        orders = Order.objects.filter(user=user).all()
+        context = {'orders': orders}
+        return render(request, template, context)
+
+
+
+
 
