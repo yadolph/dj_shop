@@ -124,8 +124,12 @@ def cart(request):
     if request.method == 'POST':
         id = request.POST.get('product_id')
         quantity = request.POST.get('quantity')
-        request.session['cart'][str(id)] = quantity
-        request.session.modified = True
+        if int(quantity) <= 0:
+            del request.session['cart'][str(id)]
+            request.session.modified = True
+        else:
+            request.session['cart'][str(id)] = quantity
+            request.session.modified = True
 
     template = 'cart.html'
     cart_list = []
