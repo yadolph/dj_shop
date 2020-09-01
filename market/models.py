@@ -43,9 +43,10 @@ class Catalogue(models.Model):
 class Order(models.Model):
     cart = models.CharField(max_length=1000)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    completed = models.BooleanField(default=False, null=False)
 
-    def create_cart(self, cart):
-        self.cart = json.dumps(cart)
+    def something(self):
+        return 5
 
     def load_cart(self):
         return json.load(self.cart)
