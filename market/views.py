@@ -121,6 +121,12 @@ def logout_user(request):
     )
 
 def cart(request):
+    if request.method == 'POST':
+        id = request.POST.get('product_id')
+        quantity = request.POST.get('quantity')
+        request.session['cart'][str(id)] = quantity
+        request.session.modified = True
+
     template = 'cart.html'
     cart_list = []
     cart = request.session.get('cart', '')
