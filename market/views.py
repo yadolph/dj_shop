@@ -150,6 +150,7 @@ def order(request):
         cart = json.dumps(cart)
         user = request.user
         new_order = Order(cart=cart, user=user)
+        new_order.make_pretty_cart()
         new_order.save()
         request.session['cart'].clear()
         request.session.modified = True

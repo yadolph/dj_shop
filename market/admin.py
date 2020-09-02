@@ -19,6 +19,11 @@ class ArtcileAdminForm(forms.ModelForm):
         model = Article
         fields = '__all__'
 
+class OrderAdminForm(forms.ModelForm):
+    pretty_cart = forms.CharField(widget=CKEditorWidget())
+    class Meta:
+        model = Article
+        fields = '__all__'
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
@@ -29,14 +34,19 @@ class ProductAdmin(admin.ModelAdmin):
     form = ProductAdminForm
 
 @admin.register(Catalogue)
-class ProductAdmin(admin.ModelAdmin):
+class CatAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(Order)
-class ProductAdmin(admin.ModelAdmin):
-    readonly_fields = ('cart',)
-    def hero_count(self, obj):
-        return format_html('<p style="color: red;">SUP</p>')
-    list_display = ['id','completed', 'hero_count']
-    fields = ['id','completed', 'something']
+class OrderAdmin(admin.ModelAdmin):
+    def pretty_cart_view(self,obj):
+        return format_html(obj.pretty_cart)
+    def user_email(self,obj):
+        return obj.user.email
+    pretty_cart_view.allow_tags = True
+    readonly_fields = ('cart', 'pretty_cart', 'user')
+    list_display = ['id', 'pretty_cart_view', 'completed','user_email']
+    fields = ['cart', 'user', 'completed']
+
+
 

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import json
-from ckeditor.fields import RichTextField
+from django.utils.html import format_html
 
 
 class User(AbstractUser):
@@ -41,13 +41,22 @@ class Catalogue(models.Model):
 
 
 class Order(models.Model):
-    cart = models.CharField(max_length=1000)
+    cart = models.CharField(max_length=250)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     completed = models.BooleanField(default=False, null=False)
+    pretty_cart = models.CharField(max_length=1000, default='no data yet', null=False)
 
-    def something(self):
-        return 5
+    def make_pretty_cart(self):
+        cart = dict(json.loads(self.cart))
+        pretty_cart = '<table style = "width: 400px;">'
+        pretty_cart += '<tr><th>Товар</th><th>Количество</th></tr>'
+        print(cart)
+        for key, val in cart.items():
+            product = Product.objects.filter(id=key).first()
+            product = f'{product.brand} {product.model}'
+            pretty_cart += f'<tr><td>{product}</td><td>{val}</td></tr>'
+        pretty_cart += '</table>'
+        self.pretty_cart = pretty_cart
+        return pretty_cart
 
-    def load_cart(self):
-        return json.load(self.cart)
 
