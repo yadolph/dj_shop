@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 
-    {% block content %}
-        <h1>{{ catalogue.name }}</h1>
-        {% for product in products %}
-            <a href="{% url 'product_full' product.id %}"><h1>{{ product.brand }} {{ product.model }}</h1></a>
-        {% endfor %}
-    {% endblock %}
+{% block title %}Просто магазин{% endblock %}
+
+{% block content %}
+
+    <h1 class="home">{{ catalogue.name }}</h1>
+    {% for product in products %}
+        <a href="{% url 'product_full' product.id %}"><h2>{{ product.brand }} {{ product.model }}</h2></a>
+    {% endfor %}
+
+    <a href="{% url 'catalogue_main' %}"><p style="margin-top: 50px">&#8592; Назад в каталог товаров</p></a>
+
+{% endblock %}

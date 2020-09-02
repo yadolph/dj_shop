@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 
-    {% block content %}
-        {% if orders %}
-            {% for order in orders %}
-                {{ order.cart }}
-            {% endfor %}
-        {% endif %}
+{% block title %}Просто магазин{% endblock %}
 
+{% block content %}
 
+    {% if orders %}
+        {% for order in orders %}
+            {{ order.cart }}
+        {% endfor %}
+    {% endif %}
 
-    {% endblock %}
+{% endblock %}

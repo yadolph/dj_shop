@@ -1,6 +1,18 @@
 body {
     font-family: 'Noto Sans', sans-serif;
+    padding: 0px;
+    margin: 0px;
+    font-size: 11pt;
 }
+
+a:link, a:visited {
+    color: #0f74a8;
+}
+
+a:hover {
+    color: #c83939;
+}
+
 
 h1.product_name {
     font-family: 'Russo One', sans-serif;
@@ -12,11 +24,38 @@ h1.product_name {
     margin: 1px;
 }
 
+h1.home {
+    font-family: 'Russo One', sans-serif;
+    font-size: 2em;
+    background: -webkit-linear-gradient(right, #185a9d, #43cea2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 25px 0 15px 0;
+}
+
 div.product_cat {
-    width: 49%;
-    display: inline-block;
+    width: 29%;
+    display: inline-grid;
     text-align: center;
-    vertical-align: top;
+    border: 1px #2e9ad0 solid;
+    box-shadow: 1px 1px 15px 0px rgba(15,100,156,0.6);
+    border-radius: 20px;
+    overflow: auto;
+    padding: 1.5%;
+    place-items: center;
+}
+
+a.product_cat {
+    font-size: 1.5em;
+    color: #0f74a8;
+}
+
+a.product_cat:visited {
+    color: #0f74a8;
+}
+
+a.product_cat:hover {
+    color: #c83939;
 }
 
 div.product_description {
@@ -26,4 +65,95 @@ div.product_description {
 
 div.footer {
     margin-top: 100px;
+}
+
+div.top_menu {
+    width: 100%;
+    background: #8360c3;
+    background: -webkit-linear-gradient(to right, #2ebf91, #8360c3);
+    background: linear-gradient(to right, #2ebf91, #8360c3);
+
+}
+
+div.top_menu_left {
+    height: 75px;
+    width: 50%;
+    /*background-color: #2aa198;*/
+    vertical-align: middle;
+    padding: 0;
+    padding-top: 25px;
+    margin: 0;
+    border: 0px;
+    display: inline-block;
+}
+
+div.top_menu_right {
+    height: 75px;
+    width: 50%;
+    /*background-color: #2aa198;*/
+    vertical-align: middle;
+    padding: 0;
+    padding-top: 25px;
+    margin: 0;
+    border: 0px;
+    display: inline-block;
+    text-align: right;
+}
+
+a.menu_button {
+    font-size: 20px;
+    display: inline-block;
+    padding: 10px;
+    background-color: #00B0E8;
+    color: #FFFFFF;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+    height: 30px;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+a.menu_button:hover {
+    box-shadow: 0 0 9px rgba(0,0,0,0.5);
+    background-color: #00ad9c;
+    transition-duration: 0.25s;
+}
+
+div.content {
+    padding: 8px;
+}
+
+div.article_home {
+    margin: 30px 10px 30px 10px;
+    border: 1px #969696 solid;
+    border-radius: 10px;
+    padding: 15px;
+    overflow: auto;
+    box-shadow: 0 0 7px rgba(0,0,0,0.3);
+}
+
+h2.article_home {
+    margin: 0;
+    padding: 0;
+}
+
+img.article_home {
+    margin: 10px 10px 0 0;
+    float: left;
+    display: block;
+}
+
+a.article_home {
+    color: #2e9ad0;
+    font-weight: normal;
+    font-size: 1em;
+}
+
+a.article_home:visited {
+    color: #2e9ad0;
+}
+
+a.article_home:hover {
+    color: #c83939;
 }

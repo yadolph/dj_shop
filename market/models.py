@@ -23,7 +23,7 @@ class Product(models.Model):
 
 
 class Article(models.Model):
-    name = models.CharField(max_length= 75, null=False)
+    name = models.CharField(max_length= 150, null=False)
     brief = models.CharField(max_length=500, null=False, default='Краткое описание статьи')
     picture = models.ImageField(upload_to='pics/%Y/%m/%d', default='pics/nopic.jpg')
     text = models.CharField(max_length=15000, null=False)

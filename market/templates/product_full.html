@@ -1,27 +1,31 @@
 {% extends 'base.html' %}
 
-    {% block content %}
-        <div>
-            <h1 class="product_name">{{ product.brand }} {{ product.model }}</h1>
-            <div><img src="../{{ product.picture.url }}" height="450px" style="display: inline-block;"/></div>
-            <div style="display: inline-block;">{{ product.description|safe }}</div>
-        </div>
-        <div>
-            <form action="" method="post">
-                {% csrf_token %}
-                {% for field in form %}
-                    {{ field.label_tag }} {{ field }}
-                {{ field.errors }}
-            {% endfor %}
+{% block title %}Просто магазин{% endblock %}
 
-            <input type="submit" value="Добавить в корзину">
-        </form>
-        {% if result == 'success' %}
-            <p style="color: green;">Товар успешно добавлен в корзину</p>
-        {% endif %}
-        {% if result == 'failure' %}
-            <p style="color: red;">Товар уже в корзине</p>
-        {% endif %}
+{% block content %}
 
-        </div>
-    {% endblock %}
+    <div>
+        <h1 class="product_name">{{ product.brand }} {{ product.model }}</h1>
+        <div><img src="../{{ product.picture.url }}" height="450px" style="display: inline-block;"/></div>
+        <div style="display: inline-block;">{{ product.description|safe }}</div>
+    </div>
+    <div>
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                {{ field.label_tag }} {{ field }}
+            {{ field.errors }}
+        {% endfor %}
+
+        <input type="submit" value="Добавить в корзину">
+    </form>
+    {% if result == 'success' %}
+        <p style="color: green;">Товар успешно добавлен в корзину</p>
+    {% endif %}
+    {% if result == 'failure' %}
+        <p style="color: red;">Товар уже в корзине</p>
+    {% endif %}
+
+    </div>
+
+{% endblock %}

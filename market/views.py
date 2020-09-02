@@ -5,6 +5,18 @@ from market.forms import RegUser, LoginUser, AddToCart, ModifyCartForm
 from django.db import IntegrityError
 from pprint import pprint
 import json
+from random import randint
+
+
+def auth_check(request):
+    user = request.user
+    if user.is_authenticated:
+        auth = True
+    else:
+        auth = False
+    context = {'auth': auth, 'username': user.username}
+    return context
+
 
 def home(request):
     template = 'home.html'
@@ -12,7 +24,16 @@ def home(request):
     username = request.user
     if request.user.is_anonymous:
         username = 'Гость'
-    context = {'articles': articles, 'username': username}
+
+    featured_products = []
+    pulled_products = Product.objects.all().order_by('-id')[:10]
+    while len(featured_products) < 3:
+        product_to_feature = pulled_products[randint(0,len(pulled_products)-1)]
+        if product_to_feature not in featured_products:
+            featured_products.append(product_to_feature)
+
+    context = {'articles': articles, 'username': username, 'featured_products': featured_products}
+    context.update(auth_check(request))
     return render(request, template, context=context)
 
 
@@ -21,6 +42,7 @@ def article_full(request, pk):
     article = get_object_or_404(Article, id=pk)
     featured_products = article.products.all()
     context = {'article': article, 'featured_products': featured_products}
+    context.update(auth_check(request))
     return render(request, template, context=context)
     pass
 
@@ -44,6 +66,7 @@ def product_full(request, pk):
         else:
             result = 'failure'
     context = {'product': product, 'form': form, 'result': result}
+    context.update(auth_check(request))
     return render(request, template, context=context)
 
 
@@ -51,6 +74,7 @@ def catalogue_main(request):
     template = 'cat.html'
     catalogues = Catalogue.objects.filter()
     context = {'catalogues': catalogues}
+    context.update(auth_check(request))
     return render(request, template, context=context)
 
 
@@ -59,6 +83,7 @@ def catalogue_section(request, pk):
     catalogue = get_object_or_404(Catalogue, id=pk)
     products = catalogue.products.all()
     context = {'catalogue': catalogue, 'products': products}
+    context.update(auth_check(request))
     return render(request, template, context=context)
 
 
@@ -141,6 +166,7 @@ def cart(request):
             products = (get_object_or_404(Product, id=int(key)), val)
             cart_list.append(products)
     context = {'cart_list': cart_list, 'form': form}
+    context.update(auth_check(request))
     return render(request, template, context=context)
 
 def order(request):
@@ -155,11 +181,13 @@ def order(request):
         request.session['cart'].clear()
         request.session.modified = True
         context = {'orders': ''}
+        context.update(auth_check(request))
         return render(request, template, context)
     else:
         user = request.user
         orders = Order.objects.filter(user=user).all()
         context = {'orders': orders}
+        context.update(auth_check(request))
         return render(request, template, context)
 
 

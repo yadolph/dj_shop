@@ -1,14 +1,26 @@
 {% extends 'base.html' %}
 
-    {% block content %}
-        {% for article in articles %}
-            <div>
-                <h1><a href="{% url 'article_full' article.id %}">{{ article.name }}</a></h1>
-                <div><img src="{{ article.picture.url }}" height="150px" style="display: inline-block;"/></div>
-                <div style="display: inline-block;">{{ article.brief|safe }}</div>
-            </div>
-        {% endfor %}
+{% load static %}
 
-        <h1><a href="{% url 'catalogue_main' %}">Перейти в каталог товаров</a></h1>
-        <p style="font-size: 1em">{{ username }}</p>
-    {% endblock %}
+{% block title %}Просто магазин{% endblock %}
+
+{% block content %}
+
+    <h1 class="home">Свежие статьи по выбору техники</h1>
+
+    {% for article in articles %}
+        <div class="article_home">
+            <h2 class="article_home"><a href="{% url 'article_full' article.id %}" class="article_home">{{ article.name }}</a></h2>
+            <img src="{{ article.picture.url }}" height="120px" class="article_home"/>{{ article.brief|safe }}
+        </div>
+    {% endfor %}
+
+    <h1 class="home">Интересные новинки в нашем каталоге</h1>
+    {% for product in featured_products %}
+        <div class="product_cat">
+            <img src="../{{ product.picture.url }}" height="130px" style="float: left;" />
+            <a href="{% url 'product_full' product.id %}" class="product_cat">{{ product.brand }} {{ product.model }}</a>
+        </div>
+    {% endfor %}
+
+{% endblock %}

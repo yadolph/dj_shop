@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
-    {% block content %}
-        {% for catalogue in catalogues %}
-            <h1><a href="{% url 'catalogue_section' catalogue.id %}">{{ catalogue.name }}</a></h1>
-        {% endfor %}
-    {% endblock %}
+{% block title %}Просто магазин{% endblock %}
+
+{% block content %}
+    <h1 class="home">Выберите интересующий вас раздел каталога</h1>
+    {% for catalogue in catalogues %}
+        <h2><a href="{% url 'catalogue_section' catalogue.id %}" class="">{{ catalogue.name }}</a></h2>
+    {% endfor %}
+
+{% endblock %}

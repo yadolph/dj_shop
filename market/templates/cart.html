@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
 
-    {% block content %}
-        <h1>Корзина</h1>
+{% block title %}Просто магазин{% endblock %}
+
+{% block content %}
+
+    <h1>Корзина</h1>
+
+    {% if not cart_list %}
+        <p>Ваша корзина пуста. Отличный повод заглянуть в наш <a href="{% url 'catalogue_main' %}">каталог товаров</a> !</p>
+    {% endif %}
+
+    {% if cart_list %}
+
         <p>Проверьте выбранные товары. Если хотите изменить количество, то введите нужное значение и
             нажмите "Обновить". Введите "0", если хотите удалить товар из корзины</p>
 
@@ -15,12 +25,19 @@
             </form>
         {% endfor %}
         <br/>
-        <form action="{% url 'order' %}" method="POST">
-            {% csrf_token %}
+
+        {% if auth %}
+            <form action="{% url 'order' %}" method="POST">
+                {% csrf_token %}
                 <input type="hidden" name="order_post" value="True">
                 <input type="submit" value="Создать заказ">
             </form>
+        {% endif %}
+        {% if not auth %}
+            <p>Чтобы сформировать заказ, пожалуйста, <a href="{% url 'login' %}">авторизуйтесь</a>
+                или <a href="{% url 'signup' %}">зарегистрируйтесь</a>. Не волнуйтесь, ваша корзина не пропадет.</p>
+        {% endif %}
 
+    {% endif %}
 
-
-    {% endblock %}
+{% endblock %}
