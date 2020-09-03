@@ -3,28 +3,28 @@
 {% block title %}Просто магазин{% endblock %}
 
 {% block content %}
-
-    <div>
-        <h1 class="product_name">{{ product.brand }} {{ product.model }}</h1>
-        <div><img src="../{{ product.picture.url }}" height="450px" style="display: inline-block;"/></div>
-        <div style="display: inline-block;">{{ product.description|safe }}</div>
-    </div>
-    <div>
-        <form action="" method="post">
-            {% csrf_token %}
-            {% for field in form %}
-                {{ field.label_tag }} {{ field }}
-            {{ field.errors }}
-        {% endfor %}
-
-        <input type="submit" value="Добавить в корзину">
-    </form>
-    {% if result == 'success' %}
-        <p style="color: green;">Товар успешно добавлен в корзину</p>
-    {% endif %}
-    {% if result == 'failure' %}
-        <p style="color: red;">Товар уже в корзине</p>
-    {% endif %}
+    <div class="product_page_content">
+        <div class="product_page_content_left">
+            <h1 class="product_name">{{ product.brand }} {{ product.model }}</h1>
+            <img src="../{{ product.picture.url }}" width="400px" style="display: inline-block;"/>
+            <form action="" method="post" class = "add_to_cart">
+                {% csrf_token %}
+                {% for field in form %}
+                    {{ field.label_tag }} {{ field }}
+                {{ field.errors }}
+                {% endfor %}
+                <input type="submit" value="Добавить в корзину" class="add_to_cart">
+            </form>
+            {% if result == 'success' %}
+                <p style="color: green;">Товар успешно добавлен в корзину</p>
+            {% endif %}
+            {% if result == 'failure' %}
+                <p style="color: red;">Товар уже в корзине</p>
+            {% endif %}
+        </div>
+        <div class="product_page_content_right">
+            <div style="display: inline-block;">{{ product.description|safe }}</div>
+        </div>
 
     </div>
 

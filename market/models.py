@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import json
-from django.utils.html import format_html
 
 
 class User(AbstractUser):
@@ -16,7 +15,6 @@ class Product(models.Model):
     description = models.CharField(max_length=5000, null=True)
     catalogue = models.ForeignKey('Catalogue', on_delete=models.CASCADE, related_name='products')
     picture = models.ImageField(upload_to='pics/%Y/%m/%d', default='pics/nopic.jpg')
-
 
     def __str__(self):
         return f'{self.brand} {self.model}'

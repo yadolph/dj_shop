@@ -11,8 +11,11 @@ class LoginUser(forms.Form):
     email = forms.CharField(label='Логин(e-mail):', max_length=25)
     password = forms.CharField(label='Пароль:', max_length=25, widget=forms.PasswordInput())
 
+
 class AddToCart(forms.Form):
-    quantity = forms.IntegerField(initial=1, label='Количество:')
+    quantity = forms.IntegerField(initial=1, label='Количество:',
+                                  widget=forms.NumberInput(attrs={'class': 'add_to_cart'}))
+
 
 class ModifyCartForm(forms.Form):
     product = forms.CharField(label='Товар:', disabled=True)

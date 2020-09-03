@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from market.models import Product, Article, Catalogue, User, Order
 from django.contrib.auth import authenticate, logout, login
-from market.forms import RegUser, LoginUser, AddToCart, ModifyCartForm
 from django.db import IntegrityError
-from pprint import pprint
+
+from market.models import Product, Article, Catalogue, User, Order
+from market.forms import RegUser, LoginUser, AddToCart, ModifyCartForm
+
 import json
 from random import randint
 
@@ -49,7 +50,6 @@ def article_full(request, pk):
 
 def product_full(request, pk):
     cart = request.session.get('cart', {})
-    pprint(cart)
     prod_id = str(pk)
     template = 'product_full.html'
     product = get_object_or_404(Product, id=pk)
@@ -61,7 +61,6 @@ def product_full(request, pk):
             quantity = int(request.POST.get('quantity'))
             cart[prod_id] = quantity
             request.session['cart'] = cart
-            pprint(cart)
             result = 'success'
         else:
             result = 'failure'
@@ -117,9 +116,6 @@ def signup(request):
 def login_user(request):
     result = ''
     form = LoginUser()
-
-    if request.user.is_authenticated:
-        print(request.user)
 
     if request.method == 'POST':
         username = request.POST.get('email')
@@ -189,7 +185,3 @@ def order(request):
         context = {'orders': orders}
         context.update(auth_check(request))
         return render(request, template, context)
-
-
-
-

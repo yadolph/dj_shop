@@ -157,3 +157,41 @@ a.article_home:visited {
 a.article_home:hover {
     color: #c83939;
 }
+
+div.product_page_content {
+    text-align: center;
+}
+
+div.product_page_content_left {
+    width: 410px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+
+div.product_page_content_right {
+    padding-top: 100px;
+    width: 800px;
+    display: inline-block;
+    text-align: left;
+}
+
+form.add_to_cart.input[type=text] {
+    color: red;
+}
+
+input.add_to_cart {
+    width: 50px;
+    text-align: center;
+    font-size: 1.15em;
+}
+
+input[type=submit].add_to_cart {
+    text-align: center;
+    width: auto;
+    background-color: #00B0E8;
+    border: 1px #00ad9c solid;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
