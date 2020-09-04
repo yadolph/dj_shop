@@ -3,7 +3,8 @@
 {% block title %}Просто магазин{% endblock %}
 
 {% block content %}
-
+<div style="text-align: center">
+    <div class="medium_form">
     <h1>Корзина</h1>
 
     {% if not cart_list %}
@@ -30,7 +31,7 @@
             <form action="{% url 'order' %}" method="POST">
                 {% csrf_token %}
                 <input type="hidden" name="order_post" value="True">
-                <input type="submit" value="Создать заказ">
+                <p style="text-align: center"><input type="submit" value="Создать заказ" class="add_to_cart"></p>
             </form>
         {% endif %}
         {% if not auth %}
@@ -39,5 +40,6 @@
         {% endif %}
 
     {% endif %}
-
+    </div>
+</div>
 {% endblock %}

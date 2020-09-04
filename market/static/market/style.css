@@ -195,3 +195,15 @@ input[type=submit].add_to_cart {
     border-radius: 5px;
     cursor: pointer;
 }
+
+div.small_form {
+    width: 200px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+div.medium_form {
+    width: 450px;
+    margin: 0 auto;
+    text-align: left;
+}

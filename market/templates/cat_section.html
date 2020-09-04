@@ -9,6 +9,24 @@
         <a href="{% url 'product_full' product.id %}"><h2>{{ product.brand }} {{ product.model }}</h2></a>
     {% endfor %}
 
-    <a href="{% url 'catalogue_main' %}"><p style="margin-top: 50px">&#8592; Назад в каталог товаров</p></a>
+    <div class="pagination">
+    <span class="step-links">
+        {% if products.has_previous %}
+            <a href="?page=1">&laquo; Первая</a>
+            <a href="?page={{ products.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ products.number }} из {{ products.paginator.num_pages }}.
+        </span>
+
+        {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}">Следующая</a>
+            <a href="?page={{ products.paginator.num_pages }}">Последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+        <a href="{% url 'catalogue_main' %}"><p style="margin-top: 50px">&#8592; Назад в каталог товаров</p></a>
 
 {% endblock %}

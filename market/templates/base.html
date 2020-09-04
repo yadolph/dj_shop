@@ -23,6 +23,7 @@
         {% endif %}
             <a class="menu_button" href="{% url 'cart' %}">Корзина</a>
         {% if auth %}
+            <a class="menu_button" href="{% url 'order' %}">Мои заказы</a>
             <a class="menu_button" href="{% url 'logout' %}">Выйти</a>
         {% endif %}
         </div>

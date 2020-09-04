@@ -3,11 +3,27 @@
 {% block title %}Просто магазин{% endblock %}
 
 {% block content %}
-
+<div style="text-align: center; margin: 0 auto; width: 600px">
     {% if orders %}
         {% for order in orders %}
-            {{ order.cart }}
+            <p style="background: lavender;">Ваш заказ № {{ order.id }}</p>
+            <p>Вы заказали:</p>
+            {{ order.pretty_cart|safe }}
+
         {% endfor %}
+    <p>По всем вопросам, связанным с доставкой, обращайтесь по телефону 8-800-5553535</p>
     {% endif %}
+
+    {% if not orders and not just_ordered %}
+    <p>У вас пока нет заказов. Это отличный повод ознакомиться с <a href="{% url 'catalogue_main' %}">нашим каталогом</a></p>
+    {% endif %}
+
+    {% if result %}
+        <p>{{ result }}</p>
+        <a>Вы можете <a href="{% url 'home' %}">вернуться на главную страницу</a>
+        или <a href="{% url 'order' %}">посмотреть свои заказы</a></p>
+    {% endif %}
+
+</div>
 
 {% endblock %}

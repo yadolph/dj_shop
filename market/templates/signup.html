@@ -3,9 +3,8 @@
 {% block title %}Просто магазин{% endblock %}
 
 {% block content %}
-
-    <div class="container">
-        <div class="header"></div>
+<div style="text-align: center">
+    <div class="small_form">
         <h2>Регистрация</h2>
         <form action="/signup/" method="post">
             {% csrf_token %}
@@ -14,10 +13,11 @@
                 {{ field.errors }}
             {% endfor %}
 
-            <input type="submit" value="Submit">
+            <p style="text-align: center"><input type="submit" value="Регистрация" class="add_to_cart"></p>
         </form>
         {{ result }}
         <p><a href="/">Вернуться на главную</a></p>
     </div>
+</div>
 
 {% endblock %}

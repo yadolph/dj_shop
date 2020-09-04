@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, logout, login
 from django.db import IntegrityError
+from django.core.paginator import Paginator
 
 from market.models import Product, Article, Catalogue, User, Order
 from market.forms import RegUser, LoginUser, AddToCart, ModifyCartForm
@@ -81,7 +82,13 @@ def catalogue_section(request, pk):
     template = 'cat_section.html'
     catalogue = get_object_or_404(Catalogue, id=pk)
     products = catalogue.products.all()
-    context = {'catalogue': catalogue, 'products': products}
+    paginator = Paginator(products, 5)
+    page_number = request.GET.get('page')
+    if not page_number:
+        page_number = 1
+    page_obj = paginator.get_page(page_number)
+
+    context = {'catalogue': catalogue, 'products': page_obj}
     context.update(auth_check(request))
     return render(request, template, context=context)
 
@@ -176,7 +183,7 @@ def order(request):
         new_order.save()
         request.session['cart'].clear()
         request.session.modified = True
-        context = {'orders': ''}
+        context = {'orders': '', 'result': 'Ваш заказ успешно создан', 'just_ordered': True,}
         context.update(auth_check(request))
         return render(request, template, context)
     else:
