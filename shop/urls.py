@@ -27,6 +27,7 @@ urlpatterns = [
     path('products/<int:pk>', views.product_full, name='product_full'),
     path('catalogue/', views.catalogue_main, name='catalogue_main'),
     path('catalogue/<int:pk>', views.catalogue_section, name='catalogue_section'),
+    path('catalogue/<int:pk>/<int:cat_id>', views.catalogue_low_level, name='catalogue_low_level'),
     path('signup/', views.signup, name='signup'),
     path('login/', views.login_user, name='login'),
     path('logout/', views.logout_user, name='logout'),

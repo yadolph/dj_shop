@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.db import IntegrityError
 from django.core.paginator import Paginator
 
-from market.models import Product, Article, Catalogue, User, Order
+from market.models import Product, Article, Catalogue, User, Order, TopCat
 from market.forms import RegUser, LoginUser, AddToCart, ModifyCartForm
 
 import json
@@ -71,8 +71,8 @@ def product_full(request, pk):
 
 
 def catalogue_main(request):
-    template = 'cat.html'
-    catalogues = Catalogue.objects.filter()
+    template = 'top_cat.html'
+    catalogues = TopCat.objects.filter()
     context = {'catalogues': catalogues}
     context.update(auth_check(request))
     return render(request, template, context=context)
@@ -80,7 +80,16 @@ def catalogue_main(request):
 
 def catalogue_section(request, pk):
     template = 'cat_section.html'
-    catalogue = get_object_or_404(Catalogue, id=pk)
+    top_catalogue = get_object_or_404(TopCat, id=pk)
+    subcatalogues = top_catalogue.catalogues.all()
+
+    context = {'catalogue': top_catalogue, 'subcatalogues': subcatalogues}
+    context.update(auth_check(request))
+    return render(request, template, context=context)
+
+def catalogue_low_level(request, pk, cat_id):
+    template = 'cat_lower.html'
+    catalogue = get_object_or_404(Catalogue, id=cat_id)
     products = catalogue.products.all()
     paginator = Paginator(products, 5)
     page_number = request.GET.get('page')
