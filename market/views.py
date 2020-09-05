@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, logout, login
 from django.db import IntegrityError
 from django.core.paginator import Paginator
@@ -130,7 +130,7 @@ def login_user(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            result = 'Вы успешно вошли в систему'
+            return redirect('home')
         else:
             result = 'Ошибка. Проверьте введенные данные'
 

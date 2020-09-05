@@ -32,10 +32,22 @@ class Article(models.Model):
 
 
 class Catalogue(models.Model):
-    name = models.CharField(max_length=75, null=False)
+    name = models.CharField(max_length=100, null=False)
+    top_level_cat = models.ForeignKey('TopCat', default=1, on_delete=models.CASCADE, related_name='catalogues')
 
     def __str__(self):
         return self.name
+
+
+class TopCat(models.Model):
+    name = models.CharField(max_length=100, null=False)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Top level catalogue'
+        verbose_name_plural = 'Top level catalogues'
 
 
 class Order(models.Model):

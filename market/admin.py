@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Article, User, Product, Catalogue, Order
+from .models import Article, User, Product, Catalogue, Order,TopCat
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 import json
@@ -35,6 +35,10 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Catalogue)
 class CatAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(TopCat)
+class TopCatAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(Order)
